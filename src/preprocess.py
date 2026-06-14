@@ -111,17 +111,24 @@ def encode_categorical(df: pd.DataFrame, cat_cols: List[str]) -> Tuple[pd.DataFr
     """
     # TODO: Implement one-hot encoding
     # 1. Create a copy of the dataframe
+    df=df.copy()
     # 2. For each column in cat_cols:
     #    a. Use pd.get_dummies(df[col], prefix=col, dtype=int) to one-hot encode
     #    b. Drop the original column: df.drop(col, axis=1, inplace=True)
     #    c. Add the new encoded columns: df = pd.concat([df, encoded], axis=1)
+encoded_cols = []
+    for col in cat_cols:
+        encoded = pd.get_dummies(df[col], prefix=col, dtype=int)
+        df.drop(col, axis=1, inplace=True)
+        df = pd.concat([df, encoded], axis=1)
     # 3. Keep track of all new column names created
+        encoded_cols.extend(encoded.columns.tolist())
     # 4. Return (df_with_encoded_cols, list_of_encoded_column_names)
-    #
+    return df, encoded_cols
     # HINT: When called in run_preprocessing(), you encode TRAIN first to get column names,
     # then when encoding TEST, you should only create those same columns (don't add new ones).
     # You can use pd.get_dummies(..., columns=...) or post-process to match columns.
-    pass
+   
 
 
 # ============================================================================
@@ -143,8 +150,10 @@ def scale_numeric(df: pd.DataFrame, num_cols: List[str]) -> Tuple[pd.DataFrame, 
     """
     # TODO: Implement numeric scaling
     # 1. Create a copy of the dataframe
+    df=df.copy()
     # 2. For each column in num_cols:
     #    a. Handle missing values first: col.fillna(col.median())
+    for col in num_cols:
     #    b. Calculate mean and std: mean = col.mean(), std = col.std()
     #    c. Standardize: (col - mean) / std
     # 3. Return (scaled_df, means_dict, stds_dict)
