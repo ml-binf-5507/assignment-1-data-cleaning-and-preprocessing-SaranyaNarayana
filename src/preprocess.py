@@ -79,13 +79,13 @@ def detect_feature_types(df: pd.DataFrame, target: str, id_cols: List[str]) -> T
     """
     # TODO: Implement feature type detection
     # 1. Get all columns except target and id_cols:
-    #    feature_cols = [c for c in df.columns if c not in id_cols and c != target]
+    feature_cols = [c for c in df.columns if c not in id_cols and c != target]
     # 2. Identify categorical columns (dtype == 'object'):
-    #    cat_cols = [c for c in feature_cols if df[c].dtype == 'object']
+    cat_cols = [c for c in feature_cols if df[c].dtype == 'object']
     # 3. Identify numeric columns (dtype in [int, float]):
-    #    num_cols = [c for c in feature_cols if df[c].dtype in ['int64', 'float64']]
+    num_cols = [c for c in feature_cols if df[c].dtype in ['int64', 'float64']]
     # 4. Return (cat_cols, num_cols)
-    pass
+    return cat_cols, num_cols
 
 
 # ============================================================================
