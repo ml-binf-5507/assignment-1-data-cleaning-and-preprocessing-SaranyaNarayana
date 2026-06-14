@@ -116,7 +116,7 @@ def encode_categorical(df: pd.DataFrame, cat_cols: List[str]) -> Tuple[pd.DataFr
     #    a. Use pd.get_dummies(df[col], prefix=col, dtype=int) to one-hot encode
     #    b. Drop the original column: df.drop(col, axis=1, inplace=True)
     #    c. Add the new encoded columns: df = pd.concat([df, encoded], axis=1)
-encoded_cols = []
+    encoded_cols = []
     for col in cat_cols:
         encoded = pd.get_dummies(df[col], prefix=col, dtype=int)
         df.drop(col, axis=1, inplace=True)
